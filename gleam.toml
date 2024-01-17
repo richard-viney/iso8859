@@ -1,0 +1,17 @@
+name = "iso_8859"
+version = "1.0.0"
+description = "Gleam library to decode ISO/IEC 8859 binary data into native UTF-8 strings."
+licences = ["MIT"]
+repository = { type = "github", user = "richard-viney", repo = "iso_8859" }
+links = [
+    { title = "Website", href = "https://github.com/richard-viney/iso_8859" },
+]
+
+[dependencies]
+gleam_stdlib = "~> 0.33"
+
+[dev-dependencies]
+gleeunit = "~> 1.0"
+
+[javascript]
+typescript_declarations = true
