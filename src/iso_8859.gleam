@@ -6,6 +6,7 @@ import gleam/string
 
 /// The ISO/IEC 8859 encodings that can be decoded. All 15 ISO/IEC 8859
 /// encodings are supported.
+///
 pub type Encoding {
   Part1
   Part2
@@ -27,6 +28,7 @@ pub type Encoding {
 /// Converts ISO/IEC 8859 binary data to a UTF-8 string. Any bytes that are not
 /// valid for the specified encoding are replaced with the `U+FFFD` character:
 /// �.
+///
 @external(javascript, "./text_decoder.mjs", "to_string")
 pub fn to_string(bits: BitArray, encoding: Encoding) -> String {
   let lut = case encoding {
@@ -69,6 +71,7 @@ fn bits_to_codepoints(bits: BitArray, lut: BitArray) -> List(UtfCodepoint) {
 }
 
 /// Lookup table for ISO/IEC 8859 Part 1.
+///
 const part_1_lut = <<
   0x0000:16, 0x0001:16, 0x0002:16, 0x0003:16, 0x0004:16, 0x0005:16, 0x0006:16,
   0x0007:16, 0x0008:16, 0x0009:16, 0x000A:16, 0x000B:16, 0x000C:16, 0x000D:16,
@@ -110,6 +113,7 @@ const part_1_lut = <<
 >>
 
 /// Lookup table for ISO/IEC 8859 Part 2.
+///
 const part_2_lut = <<
   0x0000:16, 0x0001:16, 0x0002:16, 0x0003:16, 0x0004:16, 0x0005:16, 0x0006:16,
   0x0007:16, 0x0008:16, 0x0009:16, 0x000A:16, 0x000B:16, 0x000C:16, 0x000D:16,
@@ -151,6 +155,7 @@ const part_2_lut = <<
 >>
 
 /// Lookup table for ISO/IEC 8859 Part 3.
+///
 const part_3_lut = <<
   0x0000:16, 0x0001:16, 0x0002:16, 0x0003:16, 0x0004:16, 0x0005:16, 0x0006:16,
   0x0007:16, 0x0008:16, 0x0009:16, 0x000A:16, 0x000B:16, 0x000C:16, 0x000D:16,
@@ -192,6 +197,7 @@ const part_3_lut = <<
 >>
 
 /// Lookup table for ISO/IEC 8859 Part 4.
+///
 const part_4_lut = <<
   0x0000:16, 0x0001:16, 0x0002:16, 0x0003:16, 0x0004:16, 0x0005:16, 0x0006:16,
   0x0007:16, 0x0008:16, 0x0009:16, 0x000A:16, 0x000B:16, 0x000C:16, 0x000D:16,
@@ -233,6 +239,7 @@ const part_4_lut = <<
 >>
 
 /// Lookup table for ISO/IEC 8859 Part 5.
+///
 const part_5_lut = <<
   0x0000:16, 0x0001:16, 0x0002:16, 0x0003:16, 0x0004:16, 0x0005:16, 0x0006:16,
   0x0007:16, 0x0008:16, 0x0009:16, 0x000A:16, 0x000B:16, 0x000C:16, 0x000D:16,
@@ -274,6 +281,7 @@ const part_5_lut = <<
 >>
 
 /// Lookup table for ISO/IEC 8859 Part 6.
+///
 const part_6_lut = <<
   0x0000:16, 0x0001:16, 0x0002:16, 0x0003:16, 0x0004:16, 0x0005:16, 0x0006:16,
   0x0007:16, 0x0008:16, 0x0009:16, 0x000A:16, 0x000B:16, 0x000C:16, 0x000D:16,
@@ -315,6 +323,7 @@ const part_6_lut = <<
 >>
 
 /// Lookup table for ISO/IEC 8859 Part 7.
+///
 const part_7_lut = <<
   0x0000:16, 0x0001:16, 0x0002:16, 0x0003:16, 0x0004:16, 0x0005:16, 0x0006:16,
   0x0007:16, 0x0008:16, 0x0009:16, 0x000A:16, 0x000B:16, 0x000C:16, 0x000D:16,
@@ -356,6 +365,7 @@ const part_7_lut = <<
 >>
 
 /// Lookup table for ISO/IEC 8859 Part 8.
+///
 const part_8_lut = <<
   0x0000:16, 0x0001:16, 0x0002:16, 0x0003:16, 0x0004:16, 0x0005:16, 0x0006:16,
   0x0007:16, 0x0008:16, 0x0009:16, 0x000A:16, 0x000B:16, 0x000C:16, 0x000D:16,
@@ -397,6 +407,7 @@ const part_8_lut = <<
 >>
 
 /// Lookup table for ISO/IEC 8859 Part 9.
+///
 const part_9_lut = <<
   0x0000:16, 0x0001:16, 0x0002:16, 0x0003:16, 0x0004:16, 0x0005:16, 0x0006:16,
   0x0007:16, 0x0008:16, 0x0009:16, 0x000A:16, 0x000B:16, 0x000C:16, 0x000D:16,
@@ -438,6 +449,7 @@ const part_9_lut = <<
 >>
 
 /// Lookup table for ISO/IEC 8859 Part 10.
+///
 const part_10_lut = <<
   0x0000:16, 0x0001:16, 0x0002:16, 0x0003:16, 0x0004:16, 0x0005:16, 0x0006:16,
   0x0007:16, 0x0008:16, 0x0009:16, 0x000A:16, 0x000B:16, 0x000C:16, 0x000D:16,
@@ -479,6 +491,7 @@ const part_10_lut = <<
 >>
 
 /// Lookup table for ISO/IEC 8859 Part 11.
+///
 const part_11_lut = <<
   0x0000:16, 0x0001:16, 0x0002:16, 0x0003:16, 0x0004:16, 0x0005:16, 0x0006:16,
   0x0007:16, 0x0008:16, 0x0009:16, 0x000A:16, 0x000B:16, 0x000C:16, 0x000D:16,
@@ -520,6 +533,7 @@ const part_11_lut = <<
 >>
 
 /// Lookup table for ISO/IEC 8859 Part 13.
+///
 const part_13_lut = <<
   0x0000:16, 0x0001:16, 0x0002:16, 0x0003:16, 0x0004:16, 0x0005:16, 0x0006:16,
   0x0007:16, 0x0008:16, 0x0009:16, 0x000A:16, 0x000B:16, 0x000C:16, 0x000D:16,
@@ -561,6 +575,7 @@ const part_13_lut = <<
 >>
 
 /// Lookup table for ISO/IEC 8859 Part 14.
+///
 const part_14_lut = <<
   0x0000:16, 0x0001:16, 0x0002:16, 0x0003:16, 0x0004:16, 0x0005:16, 0x0006:16,
   0x0007:16, 0x0008:16, 0x0009:16, 0x000A:16, 0x000B:16, 0x000C:16, 0x000D:16,
@@ -602,6 +617,7 @@ const part_14_lut = <<
 >>
 
 /// Lookup table for ISO/IEC 8859 Part 15.
+///
 const part_15_lut = <<
   0x0000:16, 0x0001:16, 0x0002:16, 0x0003:16, 0x0004:16, 0x0005:16, 0x0006:16,
   0x0007:16, 0x0008:16, 0x0009:16, 0x000A:16, 0x000B:16, 0x000C:16, 0x000D:16,
@@ -643,6 +659,7 @@ const part_15_lut = <<
 >>
 
 /// Lookup table for ISO/IEC 8859 Part 16.
+///
 const part_16_lut = <<
   0x0000:16, 0x0001:16, 0x0002:16, 0x0003:16, 0x0004:16, 0x0005:16, 0x0006:16,
   0x0007:16, 0x0008:16, 0x0009:16, 0x000A:16, 0x000B:16, 0x000C:16, 0x000D:16,
