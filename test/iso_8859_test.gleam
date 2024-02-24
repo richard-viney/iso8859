@@ -7,13 +7,13 @@ pub fn main() {
   gleeunit.main()
 }
 
-pub fn decode_long_string_test() {
+pub fn decode_bytes_test() {
   let test_decode = fn(
     bits: BitArray,
     encoding: iso_8859.Encoding,
     expected_result: String,
   ) {
-    iso_8859.to_string(bits, encoding)
+    iso_8859.decode_bytes(bits, encoding)
     |> should.equal(expected_result)
   }
 
@@ -25,13 +25,14 @@ pub fn decode_long_string_test() {
 
 /// Tests decoding the upper 96 characters of every encoding against the
 /// character tables below.
+///
 pub fn decode_upper_characters_test() {
   let test_decode = fn(encoding: iso_8859.Encoding, upper_chars: List(String)) {
     list.range(0xA0, 0xAF)
     |> list.each(fn(byte_value) {
       let assert Ok(expected_char) = list.at(upper_chars, byte_value - 0xA0)
 
-      iso_8859.to_string(<<byte_value>>, encoding)
+      iso_8859.decode_bytes(<<byte_value>>, encoding)
       |> should.equal(expected_char)
     })
   }

@@ -1,4 +1,4 @@
-export function to_string(bits, encoding) {
+export function decode_bytes(bits, encoding) {
   const partNumber = encoding.constructor.name.substring(4);
 
   const encodingName = [

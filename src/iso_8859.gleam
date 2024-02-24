@@ -1,7 +1,8 @@
-//// This library decodes ISO/IEC 8859 binary data into a native UTF-8 string.
-//// All 15 ISO/IEC 8859 encodings are supported.
+//// This library decodes ISO/IEC 8859 binary data into a native string. All 15
+//// ISO/IEC 8859 encodings are supported.
 
 import gleam/bit_array
+import gleam/list
 import gleam/string
 
 /// The ISO/IEC 8859 encodings that can be decoded. All 15 ISO/IEC 8859
@@ -29,8 +30,8 @@ pub type Encoding {
 /// valid for the specified encoding are replaced with the `U+FFFD` character:
 /// �.
 ///
-@external(javascript, "./text_decoder.mjs", "to_string")
-pub fn to_string(bits: BitArray, encoding: Encoding) -> String {
+@external(javascript, "./text_decoder.mjs", "decode_bytes")
+pub fn decode_bytes(bytes: BitArray, encoding: Encoding) -> String {
   let lut = case encoding {
     Part1 -> part_1_lut
     Part2 -> part_2_lut
@@ -49,12 +50,17 @@ pub fn to_string(bits: BitArray, encoding: Encoding) -> String {
     Part16 -> part_16_lut
   }
 
-  bits_to_codepoints(bits, lut)
+  bits_to_codepoints(bytes, lut, [])
+  |> list.reverse
   |> string.from_utf_codepoints
 }
 
-fn bits_to_codepoints(bits: BitArray, lut: BitArray) -> List(UtfCodepoint) {
-  case bits {
+fn bits_to_codepoints(
+  bytes: BitArray,
+  lut: BitArray,
+  acc: List(UtfCodepoint),
+) -> List(UtfCodepoint) {
+  case bytes {
     <<next_byte:size(8), rest:bytes>> -> {
       // Read the 16-bit code point value out of the LUT
       let assert Ok(<<cp:size(16)>>) = bit_array.slice(lut, next_byte * 2, 2)
@@ -63,10 +69,10 @@ fn bits_to_codepoints(bits: BitArray, lut: BitArray) -> List(UtfCodepoint) {
       // is no invalid code point data in the LUTs.
       let assert Ok(cp) = string.utf_codepoint(cp)
 
-      [cp, ..bits_to_codepoints(rest, lut)]
+      bits_to_codepoints(rest, lut, [cp, ..acc])
     }
 
-    _ -> []
+    _ -> acc
   }
 }
 

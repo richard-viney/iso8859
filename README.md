@@ -22,7 +22,7 @@ gleam add iso_8859
 To use it:
 
 ```gleam
-> iso_8859.to_string(<<0xB4, 0xEC, 0xE0>>, iso_8859.Part5)
+> iso_8859.decode_bytes(<<0xB4, 0xEC, 0xE0>>, iso_8859.Part5)
 "Дьр"
 ```
 
