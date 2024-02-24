@@ -1,6 +1,6 @@
 # Gleam ISO/IEC 8859 Decoder
 
-This Gleam library decodes ISO/IEC 8859 binary data into native UTF-8 strings. All 15
+This Gleam library decodes ISO/IEC 8859 binary data into a native string. All 15
 ISO/IEC 8859 encodings are supported.
 
 When targeting JavaScript the native `TextDecoder` is used instead.
