@@ -28,13 +28,9 @@ pub fn decode_bytes_test() {
 ///
 pub fn decode_upper_characters_test() {
   let test_decode = fn(encoding: iso_8859.Encoding, upper_chars: List(String)) {
-    list.range(0xA0, 0xAF)
-    |> list.each(fn(byte_value) {
-      let assert Ok(expected_char) = list.at(upper_chars, byte_value - 0xA0)
-
-      iso_8859.decode_bytes(<<byte_value>>, encoding)
-      |> should.equal(expected_char)
-    })
+    list.range(0xA0, 0xFF)
+    |> list.map(fn(b) { iso_8859.decode_bytes(<<b>>, encoding) })
+    |> should.equal(upper_chars)
   }
 
   test_decode(iso_8859.Part1, part_1_upper_chars)
