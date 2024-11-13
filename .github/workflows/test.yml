@@ -8,6 +8,7 @@ on:
 
 jobs:
   test:
+    name: Test
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -16,15 +17,29 @@ jobs:
       - name: Setup BEAM
         uses: erlef/setup-beam@v1
         with:
-          otp-version: "26.0.2"
-          gleam-version: "1.2.0"
+          otp-version: "27.1.2"
+          gleam-version: "1.5.0"
           rebar3-version: "3"
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: 2.0
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.1
 
       - name: Install dependencies
         run: gleam deps download
 
       - name: Run tests
-        run: gleam test
+        run: |
+          gleam test --target erlang
+          gleam test --target javascript --runtime node
+          gleam test --target javascript --runtime deno
+          gleam test --target javascript --runtime bun
 
       - name: Check code formatting
         run: gleam format --check src test
