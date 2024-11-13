@@ -30,7 +30,6 @@ pub type Encoding {
 /// valid for the specified encoding are replaced with the `U+FFFD` character:
 /// �.
 ///
-@external(javascript, "./text_decoder.mjs", "decode_bytes")
 pub fn decode_bytes(bytes: BitArray, encoding: Encoding) -> String {
   let lut = case encoding {
     Part1 -> part_1_lut
@@ -61,9 +60,9 @@ fn bits_to_codepoints(
   acc: List(UtfCodepoint),
 ) -> List(UtfCodepoint) {
   case bytes {
-    <<next_byte:size(8), rest:bytes>> -> {
+    <<next_byte, rest:bytes>> -> {
       // Read the 16-bit code point value out of the LUT
-      let assert Ok(<<cp:size(16)>>) = bit_array.slice(lut, next_byte * 2, 2)
+      let assert Ok(<<cp:16>>) = bit_array.slice(lut, next_byte * 2, 2)
 
       // Convert to a native code point. This will always succeed because there
       // is no invalid code point data in the LUTs.
